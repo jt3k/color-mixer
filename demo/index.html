@@ -3,22 +3,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
+  <title>color mixer</title>
   <style>
-	  .two {
-	      float: right;
-	  }
+    .two {
+        float: right;
+    }
 
-	  .percentage {
-	      width: 100%;
-  }
+    .percentage {
+        width: 100%;
+    }
   </style>
 </head>
 <body>
-<input type="color" class="one" value="#ff00ff">
-<input type="color" class="two"  value="#ffff00">
-  <input type="range" class="percentage" min="0" max="1" step=".01" value=".3333">
+  <input type="color" class="one" value="#00eeff">
+  <input type="color" class="two"  value="#ffee00">
+  <input type="range" class="percentage" min="0" max="1" step=".01" value=".5">
 
   <script src="script.js"></script>
+  <script>
+  (function (global, undefined) {
+    'use strict';
+    //////////////////////////////////////////
+    /// INIT
+    var one = document.querySelector('.one');
+    var two = document.querySelector('.two');
+    var pzt = document.querySelector('.percentage');
+    var bod = document.body;
+
+    function go() {
+      'use strict';
+      var color = `#${global.fuse(one.value, two.value, pzt.value)}`;
+
+      bod.style.background = color;
+    }
+
+    pzt.oninput = one.oninput = two.oninput = go;
+
+    go();
+
+  })(window)
+  </script>
 </body>
 </html>
