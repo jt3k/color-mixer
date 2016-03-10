@@ -1,0 +1,19 @@
+{
+  "name": "color-mixer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jt3k/color-mixer.git"
+  },
+  "author": "Andrey Gurtovoy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jt3k/color-mixer/issues"
+  },
+  "homepage": "https://github.com/jt3k/color-mixer#readme"
+}
