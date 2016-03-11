@@ -45,7 +45,7 @@
       res = Math.round(res);
       // convert to hex
       res = res.toString(16);
-      // add a leaad zero
+      // add a leaad zero and cut to two digits
       res = ('0' + res).slice(-2);
 
       return res;
@@ -71,5 +71,6 @@
     }, '');
   }
 
+  // return module for umd constructions of this_file_head
   return fuse;
 }));
