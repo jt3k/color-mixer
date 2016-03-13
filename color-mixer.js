@@ -52,13 +52,10 @@
     }
 
     function stringToColorArray(color) {
-      // split string in two chars chunks 
-      return color.match(/.{2}/g);
+      // split string in two chars chunks (included only numbers and word characters)
+      // exclude #
+      return color.match(/(\d|\w){2}/g);
     }
-
-    // remove hash symbol
-    one = one.replace('#', '');
-    two = two.replace('#', '');
 
     // convert to array
     one = stringToColorArray(one);
