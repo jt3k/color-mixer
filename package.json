@@ -4,7 +4,7 @@
   "description": "",
   "main": "color-mixer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx parcel build ./docs-src/index.html -d ./docs --experimental-scope-hoisting --public-url ./"
   },
   "repository": {
     "type": "git",

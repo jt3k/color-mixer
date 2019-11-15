@@ -10,11 +10,11 @@ const rgbToArray = color => [color.slice(0, 2), color.slice(2, 4), color.slice(4
 
 export default (_one, _two, percentage) => {
   // convert to array
-  one = rgbToArray(_one);
-  two = rgbToArray(_two);
+  const one = rgbToArray(_one);
+  const two = rgbToArray(_two);
 
   // concat calculated values of each rgb component
-  return one.reduce((memo, el, index) => {
+  return one.reduce((memo, _unused, index) => {
     let mixedColor;
     if (one[index] === two[index]) {
       mixedColor = one[index];
