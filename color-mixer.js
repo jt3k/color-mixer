@@ -1,73 +1,42 @@
-(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    // Node. Does not work with strict CommonJS, but
-    // only CommonJS-like environments that support module.exports,
-    // like Node.
-    module.exports = factory();
-  } else {
-    // Browser globals (root is window)
-    root.fuse = factory();
-  }
-}(this, function() {
-  /**
-   * @param  {String}  one           first color
-   * @param  {String}  two           second hex color value
-   * @param  {Number}  percentage    float value of percentage
-   * @return  {String}               hex color corresponds to the percentage
-   *                                     ratio between the two colors
-   */
-  function fuse(one, two, percentage) {
-    /**
-     * Return delta percentage between first and second hex
-     * @param  {String}  o  first hex value [00-ff]
-     * @param  {String}  t  second hex-value [00-ff]
-     * @param  {Number}  p  percentage value. Float between 0 and 1
-     * @return {String}     hex value percentage between first and second values
-     *                          if one = 100, two = 200, p = .5 
-     *                          then fuse(100,200,.5); //=> 150
-     */
-    function fus(o, t, p) {
-      if (o === t) {
-        // values are equal. there is nothing to calculate
-        return o;
-      }
-      // convert from hex
-      o = parseInt(o, 16);
-      t = parseInt(t, 16);
+const rgbToArray = color => [color.slice(0, 2), color.slice(2, 4), color.slice(4, 6)];
 
-      // percentage of delta
-      var res = ((t - o) * p) + o;
+/**
+ * Return delta percentage between first and second hex
+ * @param  {String}  one        First hex color
+ * @param  {String}  two        Second hex-color
+ * @param  {Number}  percentage Float between 0 and 1
+ * @return {String}             Hex color.
+ */
+
+export default (_one, _two, percentage) => {
+  // convert to array
+  one = rgbToArray(_one);
+  two = rgbToArray(_two);
+
+  // concat calculated values of each rgb component
+  return one.reduce((memo, el, index) => {
+    let mixedColor;
+    if (one[index] === two[index]) {
+      mixedColor = one[index];
+    } else {
+      const oneColorComponent = parseInt(one[index], 16);
+      const twoColorComponent = parseInt(two[index], 16);
+
+      // Calculate delta between first and second hex
+      // hex value percentage between first and second values
+      // if one = ff, two = 00, percentage = .5
+      // then mixedColor = 80
+      mixedColor =
+        (twoColorComponent - oneColorComponent) * percentage +
+        oneColorComponent;
 
       // remove float point
-      res = Math.round(res);
-      // convert to hex
-      res = res.toString(16);
-      // add a leaad zero and cut to two digits
-      res = ('0' + res).slice(-2);
-
-      return res;
+      mixedColor = Math.round(mixedColor);
+      mixedColor = mixedColor.toString(16);
+      mixedColor = ("0" + mixedColor).slice(-2);
     }
 
-    function stringToColorArray(color) {
-      // split string in two chars chunks (included only numbers and word characters)
-      // exclude #
-      return color.match(/(\d|\w){2}/g);
-    }
-
-    // convert to array
-    one = stringToColorArray(one);
-    two = stringToColorArray(two);
-
-    // concat calculated values of each rgb component
-    return one.reduce(function(memo, el, index) {
-      memo += fus(one[index], two[index], percentage);
-      return memo;
-    }, '');
-  }
-
-  // return module for umd constructions of this_file_head
-  return fuse;
-}));
+    memo += mixedColor;
+    return memo;
+  }, "");
+};
